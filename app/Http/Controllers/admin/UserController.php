@@ -23,7 +23,6 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
         if($validator->passes()) {
             if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
                 if(Auth::guard('admin')->user()->role != 'admin') {

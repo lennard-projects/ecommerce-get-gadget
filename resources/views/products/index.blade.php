@@ -10,7 +10,6 @@
                 <div class="alert alert-error">{{ Session::get('error') }}</div>
             @endif
             <h2 class="sr-only">Products</h2>
-            
             <div class="grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 w-full">
                 @unless (count($products) == 0)
                     @foreach ($products as $product)
@@ -27,24 +26,12 @@
                                     <p class="mt-1 text-lg font-medium text-gray-700 mx-2">Stock: {{ $product->stock }}</p>
                                 </a>
                             </div>
-
-                            {{-- <div class="flex items-end h-auto">
-                                    <form action="{{ route('cart.addToCart') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-2 rounded mr-8 w-full mt-2">
-                                            Add to Cart
-                                        </button>
-                                    </form>
-                                    
-                                </div> --}}
                             <div class="flex justify-center h-auto">
-                                {{-- {{ $product->stock === 0 ? 'bg-gray-500' : 'bg-blue-500'}}" disabled --}}
-                                <button onclick="addToCart({{ $product->id }}, {{ Cookie::get('cartCookie') }}, {{ $product->price }})"
+                                <button
+                                    onclick="addToCart({{ $product->id }}, {{ Cookie::get('cartCookie') }}, {{ $product->price }})"
                                     class="hover:bg-blue-700 text-white font-semibold py-1 px-2 rounded w-full mt-2 {{ $product->stock === 0 ? 'bg-gray-500' : 'bg-blue-500' }}">
                                     Add to Cart
                                 </button>
-
                             </div>
                         </div>
                     @endforeach
@@ -53,14 +40,12 @@
                         <h1>No products found.</h1>
                     </div>
                 @endunless
-
             </div>
             <div class="flex flex-row justify-center inline-block">
                 {{ $products->links() }}
             </div>
         </div>
     </div>
-
     <script>
         function addToCart(productId, sessionId, productPrice) {
             $.ajax({
@@ -74,22 +59,17 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        $('#alertMessage').text(response.success); // Display message
-                        $('#alertMessage').removeClass('alert-error').addClass('alert-success'); // Style as success
-                        $('#alertMessage').show(); // Show the alert message
-
-                        // Optionally, hide the alert after 3 seconds
+                        $('#alertMessage').text(response.success);
+                        $('#alertMessage').removeClass('alert-error').addClass('alert-success');
+                        $('#alertMessage').show();
                         setTimeout(function() {
                             $('#alertMessage').fadeOut();
                         }, 1500);
                     }
-
-                    if(response.exist) {
-                        $('#alertMessage').text(response.exist); // Display message
-                        $('#alertMessage').removeClass('alert-error').addClass('alert-success'); // Style as success
-                        $('#alertMessage').show(); // Show the alert message
-
-                        // Optionally, hide the alert after 3 seconds
+                    if (response.exist) {
+                        $('#alertMessage').text(response.exist);
+                        $('#alertMessage').removeClass('alert-error').addClass('alert-success');
+                        $('#alertMessage').show();
                         setTimeout(function() {
                             $('#alertMessage').fadeOut();
                         }, 1500);
@@ -102,5 +82,4 @@
             })
         }
     </script>
-
 @endsection

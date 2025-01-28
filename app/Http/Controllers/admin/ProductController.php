@@ -16,7 +16,6 @@ class ProductController extends Controller
 
     public function index() {
         return view('admin.products', [
-            // 'products' => Product::filter(request(['search']))->paginate(1, ['*'], 'page', $pageNumber)
             'products' => Product::filter(request(['search']))->paginate(5)->onEachSide(1)
         ]);
     }
@@ -26,18 +25,12 @@ class ProductController extends Controller
     }
 
     public function store(Request $request) {
-        // dd($request->file('logo'));
-        // dd($request->file('product_image')->store());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'description' => 'required',
             'stock' => 'required|integer',
             'price' => 'required|integer'
         ]);
-
-        // ,
-        //     'image_path' => 'required'
-
         if($validator->passes()) {
             if(Auth::guard('admin')->user()->role != 'admin') {
                 Auth::guard('admin')->logout();
@@ -49,19 +42,15 @@ class ProductController extends Controller
                 $product->description = $request->description;
                 $product->stock = $request->stock;
                 $product->price = $request->price;
-
                 if($request->hasFile('product_image')) {
                     $product->image_path = $request->file('product_image')->store('storage/products', 'public');
                 }
-                
                 $product->save();
                 return redirect()->route('admin.dashboard')->with('success', 'Product created successfully.');
             }
         } else {
             return redirect()->route('admin.createProduct')->withInput()->withErrors($validator);
         }
-
-
     }
 
     public function edit(Product $product) {
@@ -71,7 +60,6 @@ class ProductController extends Controller
     }
 
     public function update(Product $product, Request $request) {
-        // dd($product);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
@@ -86,10 +74,6 @@ class ProductController extends Controller
                 Auth::guard('admin')->logout();
                 return redirect()->route('admin.login')->with('error', 'You are not authorized to access this page.');
             } else {
-            // if(Auth::guard('admin')->user()->role != 'admin') {
-            //     Auth::guard('admin')->logout();
-            //     return redirect()->route('admin.createProduct')->with('error', 'You are not authorized to access this page.');
-            // } else {
                 $product->name = $request->name;
                 $product->description = $request->description;
                 $product->stock = $request->stock;
@@ -99,7 +83,6 @@ class ProductController extends Controller
                 }
                 $product->update();
                 return redirect()->route('admin.editProduct', ['product' => $product->id])->with('success', 'Product updated successfully.');
-            // }
             }
         } else {
             return redirect()->route('admin.editProduct', ['product' => $product->id])->withInput()->withErrors($validator);

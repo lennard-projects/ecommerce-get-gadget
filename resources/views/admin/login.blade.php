@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="flex justify-center w-full">
-        @if(Session::has('success'))
+        @if (Session::has('success'))
             <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
-        @if(Session::has('error'))
+        @if (Session::has('error'))
             <div class="alert alert-danger">{{ Session::get('error') }}</div>
         @endif
         <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 primary p-4 w-3/6 rounded-md shadow-md">
@@ -27,7 +27,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div>
                         <div class="flex items-center justify-between">
                             <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
@@ -40,14 +39,12 @@
                             @enderror
                         </div>
                     </div>
-
                     <div>
                         <button type="submit"
                             class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
                             in</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
