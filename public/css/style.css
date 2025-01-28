@@ -1,0 +1,27 @@
+*{
+    --white: #FFFFFF;
+    --primary: #F5F5F5;
+    --secondary: #DCDCDC;
+    --light-gray: #C0C0C0;
+    --gray: #A9A9A9;
+}
+
+.white{
+    background-color: var(--white);
+}
+
+.primary{
+    background-color: var(--primary);
+}
+
+.secondary{
+    background-color: var(--secondary);
+}
+
+.light-gray{
+    background-color: var(--light-gray);
+}
+
+.gray{
+    background-color: var(--gray);
+}
