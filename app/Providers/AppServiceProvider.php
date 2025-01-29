@@ -22,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Paginator::useBootstrapFour();
+
+        if (env('APP_ENV') == 'production') {
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 }
